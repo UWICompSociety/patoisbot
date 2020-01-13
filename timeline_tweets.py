@@ -33,7 +33,7 @@ if __name__ == '__main__':
 	for i, tweet in enumerate(api.search(q="Jamaica", lang="en", rpp=10)):
 		print(i+1, ")" , tweet.text)
 
-	user = api.get_user("realDonaldTrump")
+	user = api.get_user("elonmusk")
 	print(user.name)
 	print(user.description)
 	print("Last 20 Followers:")
