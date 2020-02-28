@@ -3,12 +3,11 @@ import tweepy
 import argparse
 
 
-
-
 class CustomStreamListener(tweepy.StreamListener):
     def on_status(self, status):
-        #if 'manchester united' in status.text.lower():
-        print (status.text)
+        file = open("jamtweets.txt", "a+")
+        file.write(status.text + "\n")
+        file.close()
 
     def on_error(self, status_code):
         print('Encountered error with status code:', status_code)

@@ -4,12 +4,16 @@ def filter_lines(lines):
     new_lines = []
     for line in lines:
         l = line.lower().strip()
+        sentence = re.sub("@\\w+", "", l)
+        sentence = re.sub("[ |\t]{2,}", "", sentence)
+        #sentence = re.sub("http\\w+", "", sentence)
+        sentence = re.sub(r'(https|http)?:\/\/(\w|\.|\/|\?|\=|\&|\%)*\b', '', sentence, flags=re.MULTILINE)
         #print(line)
-        sentence = re.sub(r"([?.!,])", r" \1 ", l)
-        sentence = re.sub(r'[" "]+', " ", sentence)
+        #sentence = re.sub(r"([?.!,])", r" \1 ", l)
+        #sentence = re.sub(r'[" "]+', " ", sentence)
         # replacing everything with space except (a-z, A-Z, ".", "?", "!", ",")
-        sentence = re.sub(r"[^a-zA-Z?.!,]+", " ", sentence)
-        sentence = re.sub(r'^https?:\/\/.*[\r\n]*', '', sentence, flags=re.MULTILINE)
+        #sentence = re.sub(r"[^a-zA-Z?.!,]+", " ", sentence)
+        #sentence = re.sub(r'^https?:\/\/.*[\r\n]*', '', sentence, flags=re.MULTILINE)
         sentence = sentence.strip()
         new_lines.append(sentence)
     return new_lines
@@ -32,7 +36,7 @@ def preprocess_text(file_name):
     # remove handles, links, emojis
     f = open(file_name, encoding="utf8")
     lines = f.readlines()
-    sentence = (filter_lines(lines))
+    sentence = filter_lines(lines)
     return sentence
 
 def word_to_int(text_sequence, word_dict):
@@ -70,9 +74,10 @@ def change_list(sentence):
 
 if __name__ == "__main__":
     sentence = preprocess_text("jamtweets.txt")
-    one_str = change_list(sentence)
-    word_dict = generate_word_dictionary(one_str)
-    print(generate_sequence_target_pairs(one_str, word_dict))
+    print(sentence)
+    # one_str = change_list(sentence)
+    # word_dict = generate_word_dictionary(one_str)
+    # print(generate_sequence_target_pairs(one_str, word_dict))
     
 
 
